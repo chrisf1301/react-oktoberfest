@@ -1,0 +1,314 @@
+/* Page Headers */
+.gallery-header {
+    text-align: center;
+    margin: 50px 0 60px 0;
+}
+
+.gallery-header h1 {
+    background-color: var(--color-dark-green);
+    color: var(--color-white);
+    padding: 20px 40px;
+    display: inline-block;
+    border: 3px solid var(--color-dark-green);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--color-card-shadow);
+}
+
+/* JSON Notice Styles */
+.json-notice {
+    background: linear-gradient(135deg, var(--color-light-green), var(--color-accent-green));
+    color: var(--color-white);
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(26, 75, 58, 0.2);
+}
+
+.json-notice h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.json-notice p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Image Gallery */
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin: 40px 0;
+}
+
+.gallery-item {
+    position: relative;
+    border: 3px solid var(--color-dark-green);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px var(--color-card-shadow);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    background-color: var(--color-white);
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px var(--color-card-shadow);
+    border-color: var(--color-light-green);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.3s ease;
+    border-radius: 8px;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.08);
+}
+
+/* Activity Info Styles */
+.activity-info {
+    padding: 1rem;
+    background: var(--color-white);
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.activity-info h3 {
+    color: var(--color-dark-green);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.activity-info p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+}
+
+.activity-info .category {
+    color: var(--color-light-green);
+    font-weight: 500;
+}
+
+.activity-info .price {
+    color: var(--color-dark-green);
+    font-weight: 500;
+}
+
+.activity-info .popularity {
+    color: var(--color-accent-green);
+    font-weight: 500;
+}
+
+/* Modal Styles */
+.modal {
+    display: flex;
+    position: fixed;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    position: relative;
+    margin: 2% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 800px;
+    background: transparent;
+    border-radius: 15px;
+    animation: slideIn 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    color: #aaa;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10001;
+    transition: color 0.3s ease;
+}
+
+.close:hover {
+    color: var(--color-dark-green);
+}
+
+.modal-content img {
+    max-width: 100%;
+    max-height: 60vh;
+    object-fit: contain;
+    border-radius: 10px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    margin-bottom: 20px;
+}
+
+.modal-info {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 600px;
+    text-align: center;
+}
+
+.modal-info h3 {
+    color: var(--color-dark-green);
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.modal-info p {
+    margin: 8px 0;
+    font-size: 1rem;
+    color: var(--color-dark-gray);
+}
+
+/* Loading and Error Messages */
+.loading-message, .error-message {
+    text-align: center;
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 8px;
+}
+
+.loading-message {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px;
+    border-top: 3px solid var(--color-dark-green);
+    margin-top: 60px;
+    background-color: var(--color-dark-green);
+    color: var(--color-white);
+    border-radius: 10px;
+    box-shadow: 0 -4px 8px var(--color-card-shadow);
+}
+
+footer p {
+    color: var(--color-white);
+    font-weight: 500;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (min-width: 1400px) {
+    .image-gallery { grid-template-columns: repeat(4, 1fr); gap: 25px; }
+}
+
+@media (max-width: 1024px) {
+    .image-gallery { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+}
+
+@media (max-width: 768px) {
+    .gallery-header { margin: 30px 0 40px 0; }
+    .gallery-header h1 { font-size: 2.2em; padding: 15px 30px; }
+    
+    .json-notice {
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
+    
+    .json-notice h2 {
+        font-size: 1.5rem;
+    }
+    
+    .json-notice p {
+        font-size: 1rem;
+    }
+    
+    .image-gallery { grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 30px 0; }
+    .gallery-item img { height: 150px; }
+    
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+    
+    .modal-content img {
+        max-height: 50vh;
+    }
+    
+    .modal-info {
+        padding: 15px;
+    }
+    
+    .modal-info h3 {
+        font-size: 1.3rem;
+    }
+    
+    .modal-info p {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .gallery-header h1 { font-size: 1.8em; padding: 15px 20px; }
+    .image-gallery { grid-template-columns: 1fr; gap: 15px; margin: 30px 0; }
+    .gallery-item img { height: 120px; }
+    
+    .modal-content {
+        width: 98%;
+        padding: 10px;
+    }
+    
+    .modal-content img {
+        max-height: 40vh;
+    }
+    
+    .modal-info {
+        padding: 10px;
+    }
+    
+    .modal-info h3 {
+        font-size: 1.2rem;
+    }
+    
+    .modal-info p {
+        font-size: 0.85rem;
+    }
+}

@@ -1,0 +1,180 @@
+/* Page Headers */
+.about-header {
+    text-align: center;
+    margin: 50px 0 60px 0;
+}
+
+.about-header h1 {
+    background-color: var(--color-dark-green);
+    color: var(--color-white);
+    padding: 20px 40px;
+    display: inline-block;
+    border: 3px solid var(--color-dark-green);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--color-card-shadow);
+}
+
+/* Picture Gallery */
+.picture-gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.picture-holder {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px var(--color-card-shadow);
+    transition: transform 0.3s ease;
+}
+
+.picture-holder:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px var(--color-card-shadow);
+}
+
+.picture-holder img {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border: 3px solid var(--color-dark-green);
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.picture-holder:hover img {
+    transform: scale(1.05);
+}
+
+.picture-caption {
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+    background-color: var(--color-light-gray);
+    border-radius: 8px;
+    border: 2px solid var(--color-light-green);
+}
+
+.picture-caption h3 {
+    color: var(--color-dark-green);
+    font-size: 1.2em;
+    margin-bottom: 8px;
+}
+
+.picture-caption p {
+    color: var(--color-dark-gray);
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* About Slideshow */
+.about-slideshow {
+    margin: 40px 0;
+    text-align: center;
+}
+
+.about-slideshow h2 { margin-bottom: 20px; }
+
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    border: 3px solid var(--color-dark-green);
+    border-radius: 15px;
+    box-shadow: 0 8px 16px var(--color-card-shadow);
+}
+
+.slideshow-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 12px;
+}
+
+.slideshow-caption {
+    text-align: center;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--color-light-gray);
+    border-radius: 10px;
+    border: 2px solid var(--color-light-green);
+}
+
+.slideshow-caption h3 {
+    color: var(--color-dark-green);
+    font-size: 1.4em;
+    margin-bottom: 10px;
+}
+
+.slideshow-caption p {
+    color: var(--color-dark-gray);
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+/* Vendors and History Sections */
+.vendors-section, .history-section {
+    background-color: var(--color-card-bg);
+    padding: 40px;
+    border: 3px solid var(--color-black);
+    margin: 40px 0;
+    box-shadow: 0 4px 8px var(--color-card-shadow);
+}
+
+.vendors-section h2, .history-section h2 { margin-bottom: 20px; }
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 30px;
+    border-top: 3px solid var(--color-dark-green);
+    margin-top: 60px;
+    background-color: var(--color-dark-green);
+    color: var(--color-white);
+    border-radius: 10px;
+    box-shadow: 0 -4px 8px var(--color-card-shadow);
+}
+
+footer p {
+    color: var(--color-white);
+    font-weight: 500;
+    font-size: 1.1em;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .slideshow-container { height: 350px; }
+}
+
+@media (max-width: 768px) {
+    .about-header { margin: 30px 0 40px 0; }
+    .about-header h1 { font-size: 2.2em; padding: 15px 30px; }
+    
+    .picture-gallery { gap: 15px; margin: 30px 0; }
+    .picture-holder img { height: 120px; }
+    
+    .about-slideshow h2 { font-size: 1.8em; }
+    .about-slideshow .slideshow-container { height: 200px; }
+    
+    .vendors-section, .history-section { padding: 25px 15px; margin: 30px 0; }
+    .vendors-section h2, .history-section h2 { font-size: 1.8em; }
+    .vendors-section p, .history-section p { font-size: 0.9em; }
+}
+
+@media (max-width: 480px) {
+    .about-header h1 { font-size: 1.8em; padding: 15px 20px; }
+    .picture-gallery { gap: 15px; margin: 30px 0; }
+    .picture-holder img { height: 120px; }
+    
+    .about-slideshow h2 { font-size: 1.8em; }
+    .about-slideshow .slideshow-container { height: 200px; }
+    
+    .vendors-section, .history-section { padding: 25px 15px; margin: 30px 0; }
+    .vendors-section h2, .history-section h2 { font-size: 1.8em; }
+    .vendors-section p, .history-section p { font-size: 0.9em; }
+}
