@@ -17,4 +17,3 @@ const TicketCard = ({ backgroundImage, title, price, features }) => {
 };
 
 export default TicketCard;
-
