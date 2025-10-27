@@ -11,30 +11,6 @@ const Contact = () => {
         <p>Get in touch with us for any questions about Oktoberfest 2024!</p>
       </section>
       
-      {/* Contact Form Section */}
-      <section className="contact-form-section">
-        <div className="contact-form-container">
-          <div className="one">
-            <h3>Send us a Message</h3>
-            <p>Note: This is a static display. Forms are not functional in this version.</p>
-            <form id="contact-form">
-              <p>
-                <label htmlFor="name">Name: </label>
-                <input type="text" name="name" required />
-              </p>
-              <p>
-                <label htmlFor="email">Email:</label>
-                <input type="email" name="email" required />
-              </p> 
-              <p><label htmlFor="message">Message:</label></p>
-              <textarea name="message" required></textarea>
-              
-              <p><button type="button" disabled>Submit Form (Not Functional)</button></p>
-            </form>
-          </div>
-        </div>
-      </section>
-      
       {/* Contact Info Section */}
       <section className="contact-info-section">
         <div className="contact-info-grid">

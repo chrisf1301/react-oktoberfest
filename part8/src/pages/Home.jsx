@@ -7,14 +7,12 @@ import "../css/Home.css";
 const Home = () => {
   return (
     <div className="container">
-      {/* Slideshow Section */}
-      <section className="slideshow">
-        <div className="slideshow-container">
-          <img src={`${process.env.PUBLIC_URL}/images/homepage.png`} alt="Oktoberfest Celebration" />
-          <div className="slideshow-text">
-            <h2>Oktoberfest 2024</h2>
-            <p>Join us for the biggest German celebration in Pennsylvania! Traditional food, live music, and family fun await.</p>
-          </div>
+      {/* Hero Image */}
+      <section className="hero-section">
+        <img src={`${process.env.PUBLIC_URL}/images/homepage.png`} alt="Oktoberfest Celebration" />
+        <div className="hero-text">
+          <h2>Oktoberfest 2024</h2>
+          <p>Join us for the biggest German celebration in Pennsylvania! Traditional food, live music, and family fun await.</p>
         </div>
       </section>
       

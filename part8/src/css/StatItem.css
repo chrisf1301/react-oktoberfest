@@ -1,17 +1,14 @@
 .stat-item h3 {
     font-size: 3.5em;
     margin-bottom: 10px;
-    color: var(--color-stats-text);
+    color: white;
 }
 
 .stat-item p {
     font-size: 1.2em;
-    color: var(--color-stats-subtext);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    color: #B8C5C1;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .stat-item h3 { font-size: 2.5em; }
     .stat-item p { font-size: 1em; }
@@ -21,4 +18,3 @@
     .stat-item h3 { font-size: 2em; }
     .stat-item p { font-size: 0.9em; }
 }
-

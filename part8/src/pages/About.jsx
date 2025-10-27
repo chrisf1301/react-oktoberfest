@@ -42,13 +42,13 @@ const About = () => {
         </div>
       </section>
       
-      {/* Slideshow Holder */}
-      <section className="about-slideshow">
+      {/* Highlights Section */}
+      <section className="highlights-section">
         <h2>Festival Highlights</h2>
-        <div className="slideshow-container">
+        <div className="highlight-image">
           <img src={`${process.env.PUBLIC_URL}/images/parade.jpg`} alt="Cultural Parade" />
         </div>
-        <div className="slideshow-caption">
+        <div className="highlight-caption">
           <h3>Cultural Unity Parade</h3>
           <p>Celebrating the beautiful blend of German traditions with American community spirit, bringing together two cultures in one unforgettable celebration</p>
         </div>

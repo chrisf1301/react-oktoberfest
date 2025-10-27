@@ -11,11 +11,9 @@ const Information = () => {
         <h1>Highlights</h1>
       </section>
       
-      {/* Slideshow Section */}
-      <section className="slideshow">
-        <div className="slideshow-container">
-          <img src={`${process.env.PUBLIC_URL}/images/flyer.jpg`} alt="Oktoberfest Flyer" />
-        </div>
+      {/* Event Flyer */}
+      <section className="flyer-section">
+        <img src={`${process.env.PUBLIC_URL}/images/flyer.jpg`} alt="Oktoberfest Flyer" />
       </section>
       
       {/* Event Details */}
