@@ -11,7 +11,7 @@ const Gallery = () => {
   useEffect(() => {
     const loadActivities = async () => {
       try {
-        const response = await fetch('/oktoberfest-activities.json');
+        const response = await fetch(`${process.env.PUBLIC_URL}/oktoberfest-activities.json`);
         if (!response.ok) {
           throw new Error('Failed to load activities');
         }
@@ -71,7 +71,7 @@ const Gallery = () => {
       <section className="image-gallery">
         {activities.map((activity) => (
           <div key={activity._id} className="gallery-item" onClick={() => openModal(activity)}>
-            <img src={`/images/${activity.img_name}`} alt={activity.name} />
+            <img src={`${process.env.PUBLIC_URL}/images/${activity.img_name}`} alt={activity.name} />
             <div className="activity-info">
               <h3>{activity.name}</h3>
               <p className="category">{activity.category}</p>
@@ -86,7 +86,7 @@ const Gallery = () => {
         <div className="modal" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <span className="close" onClick={closeModal}>&times;</span>
-            <img src={`/images/${selectedImage.img_name}`} alt={selectedImage.name} />
+            <img src={`${process.env.PUBLIC_URL}/images/${selectedImage.img_name}`} alt={selectedImage.name} />
             <div className="modal-info">
               <h3>{selectedImage.name}</h3>
               <p><strong>Category:</strong> {selectedImage.category}</p>

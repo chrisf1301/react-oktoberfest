@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="logo">
-        <img src="/images/logo.jpeg" alt="Oktoberfest Logo" />
+        <img src={`${process.env.PUBLIC_URL}/images/logo.jpeg`} alt="Oktoberfest Logo" />
       </div>
       <div className={`menu-toggle ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
         <span className="hamburger"></span>

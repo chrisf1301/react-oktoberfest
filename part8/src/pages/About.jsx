@@ -13,28 +13,28 @@ const About = () => {
       {/* Multiple Picture Holders */}
       <section className="picture-gallery">
         <div className="picture-holder">
-          <img src="/images/clipart.jpeg" alt="Clipart Food" />
+          <img src={`${process.env.PUBLIC_URL}/images/clipart.jpeg`} alt="Clipart Food" />
           <div className="picture-caption">
             <h3>Authentic German Cuisine</h3>
             <p>Traditional bratwurst, sauerkraut, and German beers</p>
           </div>
         </div>
         <div className="picture-holder">
-          <img src="/images/steve.jpeg" alt="Steve" />
+          <img src={`${process.env.PUBLIC_URL}/images/steve.jpeg`} alt="Steve" />
           <div className="picture-caption">
             <h3>Steve - Event Coordinator</h3>
             <p>Our dedicated organizer who makes it all happen</p>
           </div>
         </div>
         <div className="picture-holder">
-          <img src="/images/emil.JPG" alt="Emil" />
+          <img src={`${process.env.PUBLIC_URL}/images/emil.JPG`} alt="Emil" />
           <div className="picture-caption">
             <h3>Long Lasting Traditions</h3>
             <p>Leading our traditional German music performances</p>
           </div>
         </div>
         <div className="picture-holder">
-          <img src="/images/me.jpg" alt="Me" />
+          <img src={`${process.env.PUBLIC_URL}/images/me.jpg`} alt="Me" />
           <div className="picture-caption">
             <h3>Longtime Leaders</h3>
             <p>Bringing German culture to Pennsylvania</p>
@@ -46,7 +46,7 @@ const About = () => {
       <section className="about-slideshow">
         <h2>Festival Highlights</h2>
         <div className="slideshow-container">
-          <img src="/images/parade.jpg" alt="Cultural Parade" />
+          <img src={`${process.env.PUBLIC_URL}/images/parade.jpg`} alt="Cultural Parade" />
         </div>
         <div className="slideshow-caption">
           <h3>Cultural Unity Parade</h3>

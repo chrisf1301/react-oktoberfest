@@ -14,7 +14,7 @@ const Information = () => {
       {/* Slideshow Section */}
       <section className="slideshow">
         <div className="slideshow-container">
-          <img src="/images/flyer.jpg" alt="Oktoberfest Flyer" />
+          <img src={`${process.env.PUBLIC_URL}/images/flyer.jpg`} alt="Oktoberfest Flyer" />
         </div>
       </section>
       

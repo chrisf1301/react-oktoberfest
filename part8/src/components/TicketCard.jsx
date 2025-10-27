@@ -4,7 +4,7 @@ import "../css/TicketCard.css";
 const TicketCard = ({ backgroundImage, title, price, features }) => {
     return (
         <div className="ticket-card">
-            <div className="ticket-background" style={{backgroundImage: `url('${backgroundImage}')`}}></div>
+            <div className="ticket-background" style={{backgroundImage: `url('${process.env.PUBLIC_URL}${backgroundImage}')`}}></div>
             <div className="ticket-content">
                 <h2>{title}</h2>
                 <div className="price">{price}</div>
