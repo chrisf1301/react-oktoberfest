@@ -1,3 +1,4 @@
+// Component based on W3Schools React tutorial: https://www.w3schools.com/react/react_components.asp
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import "../css/Navbar.css";
