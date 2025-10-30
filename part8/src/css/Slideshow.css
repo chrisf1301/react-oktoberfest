@@ -1,0 +1,38 @@
+#slideshow { margin: 30px 0; }
+
+/* Container and image sizing are defined per-page (e.g., About.css) to avoid conflicts */
+
+button.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: var(--color-white);
+    text-decoration: none;
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+    text-align: center;
+    font-size: 1.4em;
+    border-radius: 50%;
+    user-select: none;
+    border: none;
+    cursor: pointer;
+}
+
+#left-arrow { left: 10px; }
+#right-arrow { right: 10px; }
+
+@media (max-width: 1024px) {
+    .slideshow-container { height: 400px; }
+}
+
+@media (max-width: 768px) {
+    .slideshow-container { height: 250px; }
+}
+
+@media (max-width: 480px) {
+    .slideshow-container { height: 180px; }
+}
+
+
