@@ -15,11 +15,9 @@ const Navbar = () => {
       <div className="logo">
         <img src={`${process.env.PUBLIC_URL}/images/logo.jpeg`} alt="Oktoberfest Logo" />
       </div>
-      <div className={`menu-toggle ${isMenuOpen ? 'active' : ''}`} onClick={toggleMenu}>
-        <span className="hamburger"></span>
-        <span className="hamburger"></span>
-        <span className="hamburger"></span>
-      </div>
+      <button onClick={toggleMenu} id="toggle-nav" type="button" aria-label="Toggle menu">
+        {isMenuOpen ? (<p>&uarr;</p>) : (<p>&darr;</p>)}
+      </button>
       <ul className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
         <li><Link to="/" onClick={() => setIsMenuOpen(false)}>Home</Link></li>
         <li><Link to="/information" onClick={() => setIsMenuOpen(false)}>Information</Link></li>
