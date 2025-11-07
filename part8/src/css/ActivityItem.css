@@ -1,5 +1,5 @@
 .activity-item {
-    border: 3px solid #1A4B3A;
+    border: 2px solid #1A4B3A;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(26, 75, 58, 0.15);
     background-color: white;
@@ -9,6 +9,8 @@
     width: 100%;
     height: 200px;
     object-fit: contain;
+    object-position: center;
+    padding: 15px;
     background-color: white;
 }
 

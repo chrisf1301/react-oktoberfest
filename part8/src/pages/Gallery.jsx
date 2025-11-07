@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Footer from '../components/Footer.jsx';
+import GalleryActivityItem from '../components/GalleryActivityItem.jsx';
 import "../css/Gallery.css";
 
 const Gallery = () => {
@@ -8,17 +10,16 @@ const Gallery = () => {
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  // After page has loaded
   useEffect(() => {
     const loadActivities = async () => {
       try {
-        const response = await fetch(`${process.env.PUBLIC_URL}/oktoberfest-activities.json`);
-        if (!response.ok) {
-          throw new Error('Failed to load activities');
-        }
-        const data = await response.json();
-        setActivities(data);
+        // Fetch JSON data from Render server
+        const response = await axios.get('https://server-oktoberfest.onrender.com/api/activities');
+        setActivities(response.data);
         setLoading(false);
       } catch (err) {
+        console.error('Error fetching activities:', err);
         setError(err.message);
         setLoading(false);
       }
@@ -65,20 +66,21 @@ const Gallery = () => {
       
       <section className="json-notice">
         <h2>Oktoberfest Activities & Features</h2>
-        <p>This page loads festival activities and features from a JSON file. Data includes activity names, descriptions, categories, pricing, and popularity ratings.</p>
+        <p>This page loads festival activities and features from our server API. Data includes activity names, descriptions, categories, pricing, and popularity ratings.</p>
       </section>
       
       <section className="image-gallery">
         {activities.map((activity) => (
-          <div key={activity._id} className="gallery-item" onClick={() => openModal(activity)}>
-            <img src={`${process.env.PUBLIC_URL}/images/${activity.img_name}`} alt={activity.name} />
-            <div className="activity-info">
-              <h3>{activity.name}</h3>
-              <p className="category">{activity.category}</p>
-              <p className="price">{activity.price_range}</p>
-              <p className="popularity">{activity.popularity}</p>
-            </div>
-          </div>
+          <GalleryActivityItem
+            key={activity._id}
+            id={activity._id}
+            img_name={activity.img_name}
+            name={activity.name}
+            category={activity.category}
+            price_range={activity.price_range}
+            popularity={activity.popularity}
+            onClick={() => openModal(activity)}
+          />
         ))}
       </section>
       
@@ -86,7 +88,7 @@ const Gallery = () => {
         <div className="modal" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <span className="close" onClick={closeModal}>&times;</span>
-            <img src={`${process.env.PUBLIC_URL}/images/${selectedImage.img_name}`} alt={selectedImage.name} />
+            <img src={`${process.env.REACT_APP_SERVER_URL || 'https://server-oktoberfest.onrender.com'}/${selectedImage.img_name}`} alt={selectedImage.name} />
             <div className="modal-info">
               <h3>{selectedImage.name}</h3>
               <p><strong>Category:</strong> {selectedImage.category}</p>

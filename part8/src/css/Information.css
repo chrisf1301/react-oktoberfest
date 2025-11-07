@@ -33,7 +33,7 @@
     display: block;
     max-width: 100%;
     height: auto;
-    border: 3px solid var(--color-dark-green);
+    border: 2px solid var(--color-dark-green);
     border-radius: 12px;
     box-shadow: 0 4px 8px var(--color-card-shadow);
     background-color: var(--color-white);

@@ -14,9 +14,7 @@ const About = () => {
       {/* Slideshow replacing picture boxes */}
       <section className="about-slideshow">
         <h2>Festival Moments</h2>
-        <div className="slideshow-container">
-          <Slideshow />
-        </div>
+        <Slideshow />
       </section>
 
       {/* Centered Parade Image */}
