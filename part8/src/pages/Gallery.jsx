@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Footer from '../components/Footer.jsx';
 import GalleryActivityItem from '../components/GalleryActivityItem.jsx';
+import ActivityFormDialog from '../components/ActivityFormDialog.jsx';
 import "../css/Gallery.css";
 
 const Gallery = () => {
@@ -9,24 +10,43 @@ const Gallery = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [showFormDialog, setShowFormDialog] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
+  // Function to load activities
+  const loadActivities = async () => {
+    try {
+      setLoading(true);
+      // Fetch JSON data from Render server
+      const response = await axios.get('https://server-oktoberfest.onrender.com/api/activities');
+      setActivities(response.data);
+      setLoading(false);
+    } catch (err) {
+      console.error('Error fetching activities:', err);
+      setError(err.message);
+      setLoading(false);
+    }
+  };
 
   // After page has loaded
   useEffect(() => {
-    const loadActivities = async () => {
-      try {
-        // Fetch JSON data from Render server
-        const response = await axios.get('https://server-oktoberfest.onrender.com/api/activities');
-        setActivities(response.data);
-        setLoading(false);
-      } catch (err) {
-        console.error('Error fetching activities:', err);
-        setError(err.message);
-        setLoading(false);
-      }
-    };
-
     loadActivities();
   }, []);
+
+  const openFormDialog = () => {
+    setShowFormDialog(true);
+    setSubmitSuccess(false);
+  };
+
+  const closeFormDialog = () => {
+    setShowFormDialog(false);
+  };
+
+  const handleActivityAdded = () => {
+    setSubmitSuccess(true);
+    // Reload activities to show the new one
+    loadActivities();
+  };
 
   const openModal = (activity) => {
     setSelectedImage(activity);
@@ -68,6 +88,26 @@ const Gallery = () => {
         <h2>Oktoberfest Activities & Features</h2>
         <p>This page loads festival activities and features from our server API. Data includes activity names, descriptions, categories, pricing, and popularity ratings.</p>
       </section>
+
+      {/* Add Activity Button */}
+      <section className="add-activity-section">
+        <button className="add-activity-btn" onClick={openFormDialog}>
+          + Add New Activity
+        </button>
+        {submitSuccess && (
+          <div className="success-message">
+            ✓ Activity added successfully!
+          </div>
+        )}
+      </section>
+
+      {/* Form Dialog */}
+      {showFormDialog && (
+        <ActivityFormDialog 
+          closeDialog={closeFormDialog}
+          onActivityAdded={handleActivityAdded}
+        />
+      )}
       
       <section className="image-gallery">
         {activities.map((activity) => (
