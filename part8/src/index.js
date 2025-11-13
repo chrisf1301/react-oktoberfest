@@ -11,8 +11,9 @@ import Gallery from './pages/Gallery.jsx';
 import Contact from './pages/Contact.jsx';
 
 export default function App() {
+  const basename = process.env.PUBLIC_URL || '';
   return (
-    <BrowserRouter basename={process.env.PUBLIC_URL}>
+    <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />}/>
@@ -27,7 +28,12 @@ export default function App() {
   );
 };
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error('Root element not found');
+}
+
+const root = ReactDOM.createRoot(rootElement);
 root.render(
   <React.StrictMode>
     <App />

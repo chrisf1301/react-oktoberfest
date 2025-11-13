@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import "../css/ActivityFormDialog.css";
 
 const ActivityFormDialog = ({ closeDialog, onActivityAdded }) => {
@@ -80,6 +79,7 @@ const ActivityFormDialog = ({ closeDialog, onActivityAdded }) => {
     }
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -88,20 +88,23 @@ const ActivityFormDialog = ({ closeDialog, onActivityAdded }) => {
     }
 
     setIsSubmitting(true);
-    setSubmitStatus(null);
+    setSubmitStatus('Sending....');
 
     try {
-      // Use the selected file's name as img_name
-      const activityData = {
-        ...formData,
-        img_name: selectedFile.name
-      };
+      // Create FormData directly from the form element (like the example)
+      const formDataToSend = new FormData(e.target);
 
-      const response = await axios.post(`${SERVER_URL}/api/activities`, activityData);
-      
-      if (response.status === 201 || response.status === 200) {
+      const response = await fetch(`${SERVER_URL}/api/activities`, {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      if (response.status === 200 || response.status === 201) {
         setSubmitStatus('success');
-        // Clear form
+        const newActivity = await response.json();
+        
+        // Reset the form
+        e.target.reset();
         setFormData({
           name: '',
           description: '',
@@ -110,11 +113,6 @@ const ActivityFormDialog = ({ closeDialog, onActivityAdded }) => {
           popularity: ''
         });
         setSelectedFile(null);
-        // Reset file input
-        const fileInput = document.getElementById('image');
-        if (fileInput) {
-          fileInput.value = '';
-        }
         
         // Notify parent component that activity was added
         if (onActivityAdded) {
@@ -125,15 +123,15 @@ const ActivityFormDialog = ({ closeDialog, onActivityAdded }) => {
         setTimeout(() => {
           closeDialog();
         }, 2000);
+      } else {
+        console.log('Error adding activity', response);
+        setSubmitStatus('error');
+        setErrors({ submit: 'Failed to add activity. Please try again.' });
       }
     } catch (err) {
       console.error('Error adding activity:', err);
       setSubmitStatus('error');
-      if (err.response && err.response.data && err.response.data.error) {
-        setErrors({ submit: err.response.data.error });
-      } else {
-        setErrors({ submit: 'Failed to add activity. Please try again.' });
-      }
+      setErrors({ submit: 'Failed to add activity. Please try again.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -146,19 +144,13 @@ const ActivityFormDialog = ({ closeDialog, onActivityAdded }) => {
         
         <h2>Add New Activity</h2>
         
-        {submitStatus === 'success' && (
-          <div className="form-success-message">
-            ✓ Activity added successfully!
-          </div>
-        )}
-        
-        {submitStatus === 'error' && errors.submit && (
-          <div className="form-error-message">
-            {errors.submit}
+        {submitStatus && (
+          <div className={submitStatus === 'success' ? 'form-success-message' : submitStatus === 'error' ? 'form-error-message' : 'form-info-message'}>
+            {submitStatus === 'success' ? '✓ Activity added successfully!' : submitStatus === 'error' ? (errors.submit || 'Failed to add activity') : submitStatus}
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="activity-form">
+        <form onSubmit={handleSubmit} className="activity-form" encType="multipart/form-data">
           <div className="form-group">
             <label htmlFor="image">Select Image *</label>
             <input
@@ -168,7 +160,6 @@ const ActivityFormDialog = ({ closeDialog, onActivityAdded }) => {
               accept="image/*"
               onChange={handleFileChange}
               className={errors.image ? 'error' : ''}
-              key={selectedFile ? selectedFile.name : 'file-input'}
             />
             {selectedFile && (
               <p className="file-selected">Selected: {selectedFile.name}</p>
