@@ -119,6 +119,293 @@
     margin-bottom: 15px;
 }
 
+/* Ticket Dialog */
+.ticket-dialog-overlay {
+    display: block;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.ticket-dialog-content {
+    background-color: var(--color-card-bg);
+    margin: 5% auto;
+    padding: 0;
+    border: 3px solid var(--color-dark-green);
+    border-radius: 12px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 4px 8px var(--color-card-shadow);
+}
+
+.ticket-dialog-container {
+    padding: 30px;
+}
+
+.ticket-dialog-close {
+    color: var(--color-dark-gray);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    line-height: 20px;
+}
+
+.ticket-dialog-close:hover {
+    color: var(--color-dark-green);
+}
+
+#ticket-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#ticket-form p {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+#ticket-form label {
+    font-weight: bold;
+    color: var(--color-dark-green);
+    font-size: 1.1em;
+}
+
+#ticket-form input[type="text"],
+#ticket-form input[type="email"],
+#ticket-form input[type="tel"],
+#ticket-form input[type="number"],
+#ticket-form select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+#ticket-form input:focus,
+#ticket-form select:focus {
+    outline: none;
+    border-color: var(--color-dark-green);
+}
+
+#ticket-form button {
+    background-color: var(--color-dark-green);
+    color: var(--color-white);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    align-self: center;
+}
+
+#ticket-form button:hover {
+    background-color: var(--color-light-green);
+}
+
+/* Ticket Purchase Form */
+.ticket-purchase-form {
+    background-color: var(--color-card-bg);
+    padding: 40px;
+    margin: 40px auto;
+    border: 3px solid var(--color-dark-green);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px var(--color-card-shadow);
+    max-width: 650px;
+}
+
+.ticket-purchase-form h2 {
+    color: var(--color-dark-green);
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2em;
+}
+
+.ticket-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.ticket-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.ticket-form-group label {
+    font-weight: 600;
+    color: var(--color-dark-green);
+    font-size: 1.1em;
+}
+
+.ticket-form-group input,
+.ticket-form-group select {
+    width: 100%;
+    padding: 14px 16px;
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 1em;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background-color: var(--color-white);
+}
+
+.ticket-form-group input:focus,
+.ticket-form-group select:focus {
+    outline: none;
+    border-color: var(--color-dark-green);
+    box-shadow: 0 0 0 3px rgba(26, 75, 58, 0.1);
+}
+
+.ticket-form-group input.error,
+.ticket-form-group select.error {
+    border-color: #dc3545;
+    background-color: #fff5f5;
+}
+
+.ticket-form-group select {
+    cursor: pointer;
+}
+
+.ticket-error-message {
+    color: #dc3545;
+    font-size: 0.9em;
+    font-weight: 500;
+    margin-top: 4px;
+}
+
+.ticket-form-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.ticket-submit-btn {
+    background-color: var(--color-dark-green);
+    color: var(--color-white);
+    padding: 15px 40px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px var(--color-card-shadow);
+}
+
+.ticket-submit-btn:hover:not(:disabled) {
+    background-color: var(--color-light-green);
+}
+
+.ticket-submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.ticket-cancel-btn {
+    background-color: var(--color-medium-gray);
+    color: var(--color-dark-gray);
+    padding: 15px 40px;
+    border: 2px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ticket-cancel-btn:hover {
+    background-color: var(--color-border);
+}
+
+.ticket-status-message {
+    padding: 15px 20px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 2px solid #bee5eb;
+}
+
+/* My Tickets Section */
+.my-tickets-section {
+    background-color: var(--color-card-bg);
+    padding: 40px;
+    margin: 40px 0;
+    border: 3px solid var(--color-dark-green);
+    border-radius: 12px;
+    box-shadow: 0 4px 8px var(--color-card-shadow);
+}
+
+.my-tickets-section h2 {
+    color: var(--color-dark-green);
+    margin-bottom: 30px;
+    text-align: center;
+    font-size: 2em;
+}
+
+.my-tickets-grid {
+    display: grid;
+    gap: 20px;
+}
+
+.ticket-order-card {
+    padding: 25px;
+    border: 2px solid var(--color-dark-green);
+    border-radius: 10px;
+    background-color: var(--color-white);
+}
+
+.ticket-order-card h3 {
+    color: var(--color-dark-green);
+    margin-bottom: 15px;
+    font-size: 1.5em;
+}
+
+.ticket-order-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.ticket-order-info p {
+    margin: 0;
+    color: var(--color-dark-gray);
+    font-size: 1em;
+}
+
+.ticket-order-info strong {
+    color: var(--color-dark-green);
+    display: inline-block;
+    min-width: 100px;
+}
+
+.ticket-loading,
+.ticket-empty {
+    text-align: center;
+    color: var(--color-dark-gray);
+    font-size: 1.2em;
+    padding: 40px;
+}
+
 /* Footer */
 footer {
     text-align: center;
@@ -165,6 +452,15 @@ footer p {
     .location-paragraph { padding: 25px 20px; margin: 30px 0; }
     .location-paragraph h2 { font-size: 1.8em; }
     .location-paragraph p { font-size: 1em; }
+    
+    .ticket-purchase-form { padding: 25px 20px; }
+    .ticket-purchase-form h2 { font-size: 1.8em; }
+    .ticket-form-actions { flex-direction: column; }
+    .ticket-submit-btn, .ticket-cancel-btn { width: 100%; }
+    
+    .my-tickets-section { padding: 25px 20px; }
+    .my-tickets-section h2 { font-size: 1.8em; }
+    .ticket-order-info { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
@@ -184,4 +480,14 @@ footer p {
     .location-paragraph { padding: 20px 15px; margin: 30px 0; }
     .location-paragraph h2 { font-size: 1.6em; }
     .location-paragraph p { font-size: 0.95em; }
+    
+    .ticket-purchase-form { padding: 20px 15px; }
+    .ticket-purchase-form h2 { font-size: 1.6em; margin-bottom: 20px; }
+    .ticket-form-group label { font-size: 1em; }
+    .ticket-form-group input, .ticket-form-group select { padding: 12px; }
+    
+    .my-tickets-section { padding: 20px 15px; }
+    .my-tickets-section h2 { font-size: 1.6em; }
+    .ticket-order-card { padding: 20px; }
+    .ticket-order-card h3 { font-size: 1.3em; }
 }
