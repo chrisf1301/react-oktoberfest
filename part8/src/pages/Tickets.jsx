@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import TicketCard from '../components/TicketCard.jsx';
 import Footer from '../components/Footer.jsx';
 import TicketsDialog from '../components/TicketsDialog.jsx';
+import EditTicketDialog from '../components/EditTicketDialog.jsx';
 import "../css/Tickets.css";
 
 const Tickets = () => {
   const [showForm, setShowForm] = useState(false);
+  const [editingTicket, setEditingTicket] = useState(null);
   const [myTickets, setMyTickets] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [deleteResult, setDeleteResult] = useState("");
+  const [editResult, setEditResult] = useState("");
 
   const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'https://server-oktoberfest.onrender.com';
 
-  // Load tickets from server
   const loadTickets = async () => {
     try {
       setLoading(true);
@@ -29,14 +32,50 @@ const Tickets = () => {
 
   useEffect(() => {
     loadTickets();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const closeDialog = () => {
     setShowForm(false);
   };
 
+  const closeEditDialog = () => {
+    setEditingTicket(null);
+    setEditResult("");
+  };
+
   const handleTicketAdded = () => {
     loadTickets();
+  };
+
+  const handleTicketUpdated = () => {
+    setEditResult("Ticket successfully updated!");
+    loadTickets();
+  };
+
+  const handleDelete = async (ticketId) => {
+    if (!window.confirm("Are you sure you want to delete this ticket?")) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`${SERVER_URL}/api/tickets/${ticketId}`, {
+        method: "DELETE",
+      });
+
+      if (response.status === 200) {
+        setDeleteResult("Ticket successfully deleted!");
+        loadTickets();
+        setTimeout(() => {
+          setDeleteResult("");
+        }, 3000);
+      } else {
+        setDeleteResult("Error deleting ticket");
+      }
+    } catch (err) {
+      console.error("Error deleting ticket:", err);
+      setDeleteResult("Error deleting ticket");
+    }
   };
 
   return (
@@ -100,7 +139,6 @@ const Tickets = () => {
         </button>
       </section>
 
-      {/* Ticket Dialog */}
       {showForm && (
         <TicketsDialog 
           closeDialog={closeDialog}
@@ -108,9 +146,20 @@ const Tickets = () => {
         />
       )}
 
-      {/* My Tickets Section */}
       <section className="my-tickets-section">
         <h2>My Tickets</h2>
+        
+        {deleteResult && (
+          <p style={{color: deleteResult.includes("successfully") ? "green" : "red", fontWeight: "bold", textAlign: "center", marginBottom: "20px"}}>
+            {deleteResult}
+          </p>
+        )}
+        
+        {editResult && (
+          <p style={{color: "green", fontWeight: "bold", textAlign: "center", marginBottom: "20px"}}>
+            {editResult}
+          </p>
+        )}
         
         {loading ? (
           <p className="ticket-loading">Loading your tickets...</p>
@@ -127,11 +176,49 @@ const Tickets = () => {
                   <p><strong>Ticket Type:</strong> {ticket.ticketType}</p>
                   <p><strong>Quantity:</strong> {ticket.quantity}</p>
                 </div>
+                <div style={{marginTop: "15px", display: "flex", gap: "10px", justifyContent: "center"}}>
+                  <button
+                    onClick={() => setEditingTicket(ticket)}
+                    style={{
+                      padding: "8px 20px",
+                      backgroundColor: "var(--color-dark-green)",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(ticket.id)}
+                    style={{
+                      padding: "8px 20px",
+                      backgroundColor: "#dc3545",
+                      color: "white",
+                      border: "none",
+                      borderRadius: "5px",
+                      cursor: "pointer",
+                      fontWeight: "bold"
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             ))}
           </div>
         )}
       </section>
+
+      {editingTicket && (
+        <EditTicketDialog
+          ticket={editingTicket}
+          closeDialog={closeEditDialog}
+          onTicketUpdated={handleTicketUpdated}
+        />
+      )}
       
       <Footer />
     </div>
