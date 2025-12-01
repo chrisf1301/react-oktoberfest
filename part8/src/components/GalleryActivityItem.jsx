@@ -14,7 +14,9 @@ const GalleryActivityItem = ({
     // Load images from server URL
     const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'https://server-oktoberfest.onrender.com';
     const cleanImgName = img_name ? img_name.trim() : '';
-    const imageUrl = `${SERVER_URL}/${cleanImgName}`;
+    // Ensure leading slash for image path
+    const imagePath = cleanImgName.startsWith('/') ? cleanImgName : `/${cleanImgName}`;
+    const imageUrl = `${SERVER_URL}${imagePath}`;
     
     return (
         <div className="gallery-item" onClick={onClick}>

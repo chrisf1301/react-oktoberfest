@@ -19,12 +19,16 @@ const Tickets = () => {
     try {
       setLoading(true);
       const response = await fetch(`${SERVER_URL}/api/tickets`);
-      if (response.status === 200) {
+      if (response.ok) {
         const tickets = await response.json();
         setMyTickets(Array.isArray(tickets) ? tickets : []);
+      } else {
+        console.error('Error loading tickets:', response.status, response.statusText);
+        setMyTickets([]);
       }
     } catch (err) {
       console.error('Error loading tickets:', err);
+      setMyTickets([]);
     } finally {
       setLoading(false);
     }
@@ -63,14 +67,15 @@ const Tickets = () => {
         method: "DELETE",
       });
 
-      if (response.status === 200) {
+      if (response.ok) {
         setDeleteResult("Ticket successfully deleted!");
         loadTickets();
         setTimeout(() => {
           setDeleteResult("");
         }, 3000);
       } else {
-        setDeleteResult("Error deleting ticket");
+        const errorText = await response.text();
+        setDeleteResult(`Error: ${errorText || "Failed to delete ticket"}`);
       }
     } catch (err) {
       console.error("Error deleting ticket:", err);
@@ -168,13 +173,34 @@ const Tickets = () => {
         ) : (
           <div className="my-tickets-grid">
             {myTickets.map((ticket, index) => (
-              <div key={ticket.id || index} className="ticket-order-card">
+              <div key={ticket._id || index} className="ticket-order-card">
                 <h3>{ticket.name}</h3>
+                {ticket.image && (
+                  <div style={{marginBottom: "15px", textAlign: "center"}}>
+                    <img 
+                      src={`${SERVER_URL}/${ticket.image.startsWith('/') ? ticket.image.slice(1) : ticket.image}`} 
+                      alt="Ticket" 
+                      style={{
+                        maxWidth: "100%",
+                        maxHeight: "200px",
+                        borderRadius: "5px",
+                        border: "1px solid #ddd"
+                      }}
+                      onError={(e) => {
+                        console.error('Image failed to load:', ticket.image);
+                        e.target.style.display = 'none';
+                      }}
+                    />
+                  </div>
+                )}
                 <div className="ticket-order-info">
                   <p><strong>Email:</strong> {ticket.email}</p>
                   <p><strong>Phone:</strong> {ticket.phone}</p>
                   <p><strong>Ticket Type:</strong> {ticket.ticketType}</p>
                   <p><strong>Quantity:</strong> {ticket.quantity}</p>
+                  {ticket.status && (
+                    <p><strong>Status:</strong> {ticket.status}</p>
+                  )}
                 </div>
                 <div style={{marginTop: "15px", display: "flex", gap: "10px", justifyContent: "center"}}>
                   <button
@@ -192,7 +218,7 @@ const Tickets = () => {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDelete(ticket.id)}
+                    onClick={() => handleDelete(ticket._id)}
                     style={{
                       padding: "8px 20px",
                       backgroundColor: "#dc3545",

@@ -13,26 +13,38 @@ const TicketsDialog = (props) => {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  const handleImageChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.files[0];
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     setResult("Sending....");
     const formData = new FormData(event.target);
 
-    const response = await fetch(`${SERVER_URL}/api/tickets`, {
-      method: "POST",
-      body: formData,
-    });
+    try {
+      const response = await fetch(`${SERVER_URL}/api/tickets`, {
+        method: "POST",
+        body: formData,
+      });
 
-    if (response.status === 200 || response.status === 201) {
-      setResult("Ticket Order Successfully Submitted");
-      event.target.reset();
-      if (props.onTicketAdded) {
-        props.onTicketAdded();
+      if (response.status === 200 || response.status === 201) {
+        setResult("Ticket Order Successfully Submitted");
+        event.target.reset();
+        if (props.onTicketAdded) {
+          props.onTicketAdded();
+        }
+        props.closeDialog();
+      } else {
+        console.log("Error submitting ticket", response);
+        const errorText = await response.text();
+        setResult(errorText || "Failed to submit ticket order");
       }
-      props.closeDialog();
-    } else {
-      console.log("Error submitting ticket", response);
-      setResult("Error submitting ticket order");
+    } catch (err) {
+      console.error("Error submitting ticket:", err);
+      setResult("Error submitting ticket order. Please try again.");
     }
   };
 
@@ -113,6 +125,43 @@ const TicketsDialog = (props) => {
                 required
               />
             </p>
+
+            <section style={{display: "flex", gap: "20px", marginBottom: "15px"}}>
+              <div style={{flex: "1"}}>
+                <p><strong>Image Preview:</strong></p>
+                <img
+                  src={
+                    inputs.image != null
+                      ? URL.createObjectURL(inputs.image)
+                      : ""
+                  }
+                  alt="Ticket preview"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "200px",
+                    borderRadius: "5px",
+                    border: "1px solid #ddd",
+                    display: inputs.image ? "block" : "none"
+                  }}
+                  onError={(e) => {
+                    console.error('Image failed to load');
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+              <div style={{flex: "1"}}>
+                <p>
+                  <label htmlFor="image">Upload Image (optional):</label>
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    onChange={handleImageChange}
+                    accept="image/*"
+                  />
+                </p>
+              </div>
+            </section>
 
             <p>
               <button type="submit">Submit</button>

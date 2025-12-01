@@ -10,12 +10,14 @@ const Gallery = () => {
   const [error, setError] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'https://server-oktoberfest.onrender.com';
+
   // Function to load activities
   const loadActivities = async () => {
     try {
       setLoading(true);
       // Fetch JSON data from Render server
-      const response = await axios.get('https://server-oktoberfest.onrender.com/api/activities');
+      const response = await axios.get(`${SERVER_URL}/api/activities`);
       setActivities(response.data);
       setLoading(false);
     } catch (err) {
@@ -90,7 +92,14 @@ const Gallery = () => {
         <div className="modal" onClick={closeModal}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <span className="close" onClick={closeModal}>&times;</span>
-            <img src={`${process.env.REACT_APP_SERVER_URL || 'https://server-oktoberfest.onrender.com'}/${selectedImage.img_name}`} alt={selectedImage.name} />
+            <img 
+              src={`${SERVER_URL}/${selectedImage.img_name.startsWith('/') ? selectedImage.img_name.slice(1) : selectedImage.img_name}`} 
+              alt={selectedImage.name}
+              onError={(e) => {
+                console.error('Image failed to load:', selectedImage.img_name);
+                e.target.style.display = 'none';
+              }}
+            />
             <div className="modal-info">
               <h3>{selectedImage.name}</h3>
               <p><strong>Category:</strong> {selectedImage.category}</p>

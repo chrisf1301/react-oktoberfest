@@ -2,20 +2,31 @@ import React, { useState, useEffect } from "react";
 import "../css/Tickets.css";
 
 const EditTicketDialog = (props) => {
-  const [inputs, setInputs] = useState({});
+  const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'https://server-oktoberfest.onrender.com';
+
+  const [inputs, setInputs] = useState({
+    _id: props.ticket ? props.ticket._id : "",
+    name: props.ticket ? props.ticket.name : "",
+    email: props.ticket ? props.ticket.email : "",
+    phone: props.ticket ? props.ticket.phone : "",
+    ticketType: props.ticket ? props.ticket.ticketType : "",
+    quantity: props.ticket ? props.ticket.quantity : "",
+    prev_img: props.ticket ? props.ticket.image : null,
+  });
+
   const [result, setResult] = useState("");
   const [errors, setErrors] = useState({});
-
-  const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'https://server-oktoberfest.onrender.com';
 
   useEffect(() => {
     if (props.ticket) {
       setInputs({
+        _id: props.ticket._id || "",
         name: props.ticket.name || "",
         email: props.ticket.email || "",
         phone: props.ticket.phone || "",
         ticketType: props.ticket.ticketType || "",
-        quantity: props.ticket.quantity || ""
+        quantity: props.ticket.quantity || "",
+        prev_img: props.ticket.image || null,
       });
     }
   }, [props.ticket]);
@@ -80,6 +91,12 @@ const EditTicketDialog = (props) => {
     }
   };
 
+  const handleImageChange = (event) => {
+    const name = event.target.name;
+    const value = event.target.files[0];
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
+
   const onSubmit = async (event) => {
     event.preventDefault();
     
@@ -91,22 +108,27 @@ const EditTicketDialog = (props) => {
     setResult("Sending....");
     const formData = new FormData(event.target);
 
-    const response = await fetch(`${SERVER_URL}/api/tickets/${props.ticket.id}`, {
-      method: "PUT",
-      body: formData,
-    });
+    try {
+      const response = await fetch(`${SERVER_URL}/api/tickets/${props.ticket._id}`, {
+        method: "PUT",
+        body: formData,
+      });
 
-    if (response.status === 200) {
-      setResult("Ticket Successfully Updated");
-      if (props.onTicketUpdated) {
-        props.onTicketUpdated();
-      }
-      setTimeout(() => {
+      if (response.status === 200) {
+        setResult("Ticket Successfully Updated");
+        event.target.reset();
+        if (props.onTicketUpdated) {
+          props.onTicketUpdated();
+        }
         props.closeDialog();
-      }, 1500);
-    } else {
-      console.log("Error updating ticket", response);
-      setResult("Error updating ticket");
+      } else {
+        console.log("Error updating ticket", response);
+        const errorText = await response.text();
+        setResult(errorText || "Failed to update ticket");
+      }
+    } catch (err) {
+      console.error("Error updating ticket:", err);
+      setResult("Error updating ticket. Please try again.");
     }
   };
 
@@ -123,6 +145,44 @@ const EditTicketDialog = (props) => {
           <h2>Edit Ticket</h2>
           {result && <p style={{color: result.includes("Successfully") ? "green" : "red", fontWeight: "bold"}}>{result}</p>}
           <form id="ticket-form" onSubmit={onSubmit}>
+            <section style={{display: "flex", gap: "20px", marginBottom: "15px"}}>
+              <div style={{flex: "1"}}>
+                <p><strong>Image Preview:</strong></p>
+                <img
+                  src={
+                    inputs.image != null
+                      ? URL.createObjectURL(inputs.image)
+                      : inputs.prev_img != null
+                      ? `${SERVER_URL}/${inputs.prev_img.startsWith('/') ? inputs.prev_img.slice(1) : inputs.prev_img}`
+                      : ""
+                  }
+                  alt="Ticket preview"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "200px",
+                    borderRadius: "5px",
+                    border: "1px solid #ddd",
+                    display: inputs.image || inputs.prev_img ? "block" : "none"
+                  }}
+                  onError={(e) => {
+                    console.error('Image failed to load');
+                    e.target.style.display = 'none';
+                  }}
+                />
+              </div>
+              <div style={{flex: "1"}}>
+                <p>
+                  <label htmlFor="image">Upload Image:</label>
+                  <input
+                    type="file"
+                    id="image"
+                    name="image"
+                    onChange={handleImageChange}
+                    accept="image/*"
+                  />
+                </p>
+              </div>
+            </section>
             <p>
               <label htmlFor="name">Full Name:</label>
               <input
