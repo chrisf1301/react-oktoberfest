@@ -1,35 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../css/Tickets.css";
 
 const EditTicketDialog = (props) => {
   const SERVER_URL = process.env.REACT_APP_SERVER_URL || 'https://server-oktoberfest.onrender.com';
 
   const [inputs, setInputs] = useState({
-    _id: props.ticket ? props.ticket._id : "",
-    name: props.ticket ? props.ticket.name : "",
-    email: props.ticket ? props.ticket.email : "",
-    phone: props.ticket ? props.ticket.phone : "",
-    ticketType: props.ticket ? props.ticket.ticketType : "",
-    quantity: props.ticket ? props.ticket.quantity : "",
-    prev_img: props.ticket ? props.ticket.image : null,
+    _id: props._id,
+    name: props.name,
+    email: props.email,
+    phone: props.phone,
+    ticketType: props.ticketType,
+    quantity: props.quantity,
+    prev_img: props.image,
   });
 
   const [result, setResult] = useState("");
   const [errors, setErrors] = useState({});
-
-  useEffect(() => {
-    if (props.ticket) {
-      setInputs({
-        _id: props.ticket._id || "",
-        name: props.ticket.name || "",
-        email: props.ticket.email || "",
-        phone: props.ticket.phone || "",
-        ticketType: props.ticket.ticketType || "",
-        quantity: props.ticket.quantity || "",
-        prev_img: props.ticket.image || null,
-      });
-    }
-  }, [props.ticket]);
 
   const validateForm = () => {
     const newErrors = {};
@@ -109,7 +95,7 @@ const EditTicketDialog = (props) => {
     const formData = new FormData(event.target);
 
     try {
-      const response = await fetch(`${SERVER_URL}/api/tickets/${props.ticket._id}`, {
+      const response = await fetch(`${SERVER_URL}/api/tickets/${props._id}`, {
         method: "PUT",
         body: formData,
       });
@@ -117,9 +103,7 @@ const EditTicketDialog = (props) => {
       if (response.status === 200) {
         setResult("Ticket Successfully Updated");
         event.target.reset();
-        if (props.onTicketUpdated) {
-          props.onTicketUpdated();
-        }
+        props.editTicket(await response.json());
         props.closeDialog();
       } else {
         console.log("Error updating ticket", response);

@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import TicketCard from '../components/TicketCard.jsx';
 import Footer from '../components/Footer.jsx';
 import TicketsDialog from '../components/TicketsDialog.jsx';
-import EditTicketDialog from '../components/EditTicketDialog.jsx';
+import TicketItem from '../components/TicketItem.jsx';
 import "../css/Tickets.css";
 
 const Tickets = () => {
   const [showForm, setShowForm] = useState(false);
-  const [editingTicket, setEditingTicket] = useState(null);
   const [myTickets, setMyTickets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleteResult, setDeleteResult] = useState("");
@@ -43,11 +42,6 @@ const Tickets = () => {
     setShowForm(false);
   };
 
-  const closeEditDialog = () => {
-    setEditingTicket(null);
-    setEditResult("");
-  };
-
   const handleTicketAdded = () => {
     loadTickets();
   };
@@ -55,13 +49,12 @@ const Tickets = () => {
   const handleTicketUpdated = () => {
     setEditResult("Ticket successfully updated!");
     loadTickets();
+    setTimeout(() => {
+      setEditResult("");
+    }, 3000);
   };
 
-  const handleDelete = async (ticketId) => {
-    if (!window.confirm("Are you sure you want to delete this ticket?")) {
-      return;
-    }
-
+  const handleTicketDeleted = async (ticketId) => {
     try {
       const response = await fetch(`${SERVER_URL}/api/tickets/${ticketId}`, {
         method: "DELETE",
@@ -173,78 +166,16 @@ const Tickets = () => {
         ) : (
           <div className="my-tickets-grid">
             {myTickets.map((ticket, index) => (
-              <div key={ticket._id || index} className="ticket-order-card">
-                <h3>{ticket.name}</h3>
-                {ticket.image && (
-                  <div style={{marginBottom: "15px", textAlign: "center"}}>
-                    <img 
-                      src={`${SERVER_URL}/${ticket.image.startsWith('/') ? ticket.image.slice(1) : ticket.image}`} 
-                      alt="Ticket" 
-                      style={{
-                        maxWidth: "100%",
-                        maxHeight: "200px",
-                        borderRadius: "5px",
-                        border: "1px solid #ddd"
-                      }}
-                      onError={(e) => {
-                        console.error('Image failed to load:', ticket.image);
-                        e.target.style.display = 'none';
-                      }}
-                    />
-                  </div>
-                )}
-                <div className="ticket-order-info">
-                  <p><strong>Email:</strong> {ticket.email}</p>
-                  <p><strong>Phone:</strong> {ticket.phone}</p>
-                  <p><strong>Ticket Type:</strong> {ticket.ticketType}</p>
-                  <p><strong>Quantity:</strong> {ticket.quantity}</p>
-                  {ticket.status && (
-                    <p><strong>Status:</strong> {ticket.status}</p>
-                  )}
-                </div>
-                <div style={{marginTop: "15px", display: "flex", gap: "10px", justifyContent: "center"}}>
-                  <button
-                    onClick={() => setEditingTicket(ticket)}
-                    style={{
-                      padding: "8px 20px",
-                      backgroundColor: "var(--color-dark-green)",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "5px",
-                      cursor: "pointer",
-                      fontWeight: "bold"
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => handleDelete(ticket._id)}
-                    style={{
-                      padding: "8px 20px",
-                      backgroundColor: "#dc3545",
-                      color: "white",
-                      border: "none",
-                      borderRadius: "5px",
-                      cursor: "pointer",
-                      fontWeight: "bold"
-                    }}
-                  >
-                    Delete
-                  </button>
-                </div>
-              </div>
+              <TicketItem
+                key={ticket._id || index}
+                ticket={ticket}
+                onTicketUpdated={handleTicketUpdated}
+                onTicketDeleted={handleTicketDeleted}
+              />
             ))}
           </div>
         )}
       </section>
-
-      {editingTicket && (
-        <EditTicketDialog
-          ticket={editingTicket}
-          closeDialog={closeEditDialog}
-          onTicketUpdated={handleTicketUpdated}
-        />
-      )}
       
       <Footer />
     </div>
