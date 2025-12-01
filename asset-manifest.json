@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/react-oktoberfest/static/css/main.014d7ca2.css",
-    "main.js": "/react-oktoberfest/static/js/main.0e17f06f.js",
+    "main.js": "/react-oktoberfest/static/js/main.0c769bbf.js",
     "index.html": "/react-oktoberfest/index.html",
     "main.014d7ca2.css.map": "/react-oktoberfest/static/css/main.014d7ca2.css.map",
-    "main.0e17f06f.js.map": "/react-oktoberfest/static/js/main.0e17f06f.js.map"
+    "main.0c769bbf.js.map": "/react-oktoberfest/static/js/main.0c769bbf.js.map"
   },
   "entrypoints": [
     "static/css/main.014d7ca2.css",
-    "static/js/main.0e17f06f.js"
+    "static/js/main.0c769bbf.js"
   ]
 }
